@@ -1,0 +1,27 @@
+version: '3.9'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/code
+    depends_on:
+      - db
+      - redis
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: email_sender
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
